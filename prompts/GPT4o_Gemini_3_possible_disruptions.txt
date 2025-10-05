@@ -1,0 +1,18 @@
+Instruction: You are given a detailed travel itinerary in JSON format, which includes transportation, attractions, accommodations,
+meals, events, and the traveler’s preferences. Based on this information, analyze the plan and identify potential types of disruptions or
+changes that are most likely to occur, classifying them into one or more of the following categories:
+- Flights: Flight delays, cancellations, missed connections, baggage issues, strikes, or airport closures.
+- Restaurants: Closure, changed hours, poor hygiene or food quality, no support for dietary needs, overcrowding, long wait times, price
+hikes due to events.
+- Attractions: Maintenance/renovation, weather-related closures, government restrictions, ticket unavailability, ID requirements,
+overcrowding, specific day openings.
+- Accommodations: Poor hygiene, remote/unsafe location, missing promised amenities.
+- Miscellaneous: Event Cancellations, rescheduling, ticket issues, venue changes, weather or safety concerns.Forgotten documents,
+illness, fatigue, jet lag, bad weather.
+Remember to give atleast three possible disruptions for each day of the plan. Example Format:
+Most likely disruption categories:
+- Flights: Justification...
+- Restaurants: Justification...
+...
+Input:
+{Insert the travel itinerary JSON here}

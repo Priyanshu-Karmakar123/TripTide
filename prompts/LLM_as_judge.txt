@@ -1,0 +1,111 @@
+JUDGE_PROMPT = """You are a very harsh evaluator of travel plans. 
+You are given:
+1. The original travel plan
+2. The disruption description
+3. The revised plan
+
+---
+
+### Traveler Type Definitions
+- **Planbound** = Must follow the original plan exactly, unless absolutely forced by disruption.  
+  *Step-level disruption → only that step may change.  
+  Day-level disruption → only that day may change.  
+  Plan-level disruption → broader edits allowed.  
+  Any change outside this scope = automatic penalty (max score 2–3).*
+
+- **Flexiventurer** = Allows more flexibility, but even here, unrelated or unnecessary changes = penalty.  
+
+---
+
+### Mandatory Penalties
+- **If disruption not clearly addressed** → score = 1.  
+- **If disrupted POI still appears** → score = 1.  
+- **If plan unchanged** → score = 1.  
+- **If disruption only “acknowledged” but not actually mitigated in itinerary** → score = 2.  
+- **If Planbound constraint violated (edits outside allowed scope)** → score = max 2–3.  
+- **If sequencing is unrealistic (impossible times, locations, overlaps)** → score = max 3.  
+
+---
+
+### Scoring Rubric (strict)
+- *5 (Excellent)*  
+  Disruption handled clearly and effectively:  
+  • Disrupted POI replaced/removed properly.  
+  • Only necessary changes made (no extras).  
+  • Traveler constraints fully respected.  
+  • Plan is coherent and realistic.  
+  → Use 5 if handling is perfect OR very close to perfect.  
+
+- *4 (Good)*  
+  Disruption handled correctly, but with minor flaws:  
+  • Traveler = Flexiventurer → a small unnecessary edit (e.g., time shift, tiny change).  
+  • Traveler = Planbound → disruption fixed properly, but very small deviation outside scope.  
+  → 4 means “handled well but not flawless.”  
+
+- *3 (Average)*  
+  Disruption addressed, but with noticeable problems:  
+  • Planbound → multiple edits outside allowed scope.  
+  • Flexiventurer → unnecessary changes beyond what was required.  
+  • Some sequencing / feasibility issues (but plan still makes sense overall).  
+  → 3 = “okay, but sloppy or constraint-violating.”  
+
+- *2 (Poor)*  
+  Disruption weakly or superficially handled:  
+  • Only acknowledgement text without real itinerary fix.  
+  • Disrupted POI still present but disruption noted.  
+  • Major incoherence in plan (e.g., order, timing).  
+  → 2 = “attempt made, but it fails in practice.”  
+
+- *1 (Very Poor)*  
+  Disruption ignored entirely:  
+  • Revised plan identical to original, OR  
+  • Disrupted POI remains unchanged with no mitigation.  
+  • Changes are irrelevant to disruption.  
+  → 1 = “clear evidence disruption not handled at all.”
+
+
+⚠️ Default to lower scores if there is *any doubt*.  
+⚠️ Scores 4 and 5 should be *rare exceptions*, only for near-perfect plans.
+
+---
+
+### Examples
+
+**Case A (Very Poor – 1)**  
+Original Plan: Dinner at "Bone's Restaurant, Atlanta".  
+Disruption: Restaurant closed due to private event.  
+Revised Plan: Still lists "Bone's Restaurant" for dinner.  
+→ Score = 1 ("Disruption ignored, POI unchanged.")  
+
+**Case B (Good – 4)**  
+Original Plan: Lunch at 12:30 at "South City Kitchen Midtown, Atlanta", Dinner at 20:45 at " Mc Donalds, Atlanta"  
+Disruption: Restaurant unavailable due to supply chain issues.  
+Revised Plan: Lunch replaced with "Mary Mac’s Tea Room"(same time, same city),  Dinner at 20:15 at " Mc Donalds, Atlanta"  
+But also unnecessarily moved dinner 30 minutes earlier.  
+→ Score = 4 ("Disruption correctly handled, but one unnecessary timing edit.")  
+
+**Case C (Poor – 2)**  
+Original Plan: Day 3 visit to "Lenox Square, Atlanta".  
+Disruption: Mall closed due to security incident.  
+Revised Plan: Starts with acknowledgement but still lists Lenox Square in itinerary.  
+→ Score = 2 ("Disruption noted but not properly mitigated; POI remains.")  
+
+---
+
+Now evaluate:
+
+Original Plan:
+{initial_plan}
+
+Disruption:
+{disruption_info}
+
+Revised Plan:
+{mitigated_plan}
+
+Answer ONLY in JSON:
+{{
+  "score": X,
+  "explanation": "<explicit reasoning, listing penalties applied and why>"
+}}
+"""

@@ -1,0 +1,23 @@
+Instruction: You are an efficient AI agent to generate user query in natural language. You are given the following travel disruption
+information including disruption category, reason, disruption timestamp and disruption severity. Convert it into a travel disruption query
+by a user, which is a natural language query for the disruption information. The query should not include information like disruption
+severity that is unknown to a traveler and should be as natural as possible. The query must also ask for alternative options.
+*****Example:*****
+Disruption Information:
+Day 1 - Lunch: Thames Street Oyster House
+- Disruption Category: Restaurants
+- Reason: The restaurant may be closed for a private media
+launch event or local food festival buyout, making regular
+dining unavailable for the public.
+- Disruption Detection Timestamp: 1 day before (via restaurant
+website or local event calendars).
+- Disruption Severity: Step-level
+-Confidence: Medium
+Output:
+Hey, I had planned to have lunch at Thames Street Oyster House on
+Day 1, but I just found out today -- only a day before my visit -- that
+it’s closed due to a private event. Could you suggest a good alternative?
+*****Example Ends*****
+Given disruption information:
+{Disruption Information}
+Output:

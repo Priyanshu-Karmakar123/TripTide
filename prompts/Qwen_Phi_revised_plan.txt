@@ -1,0 +1,100 @@
+You are given a travel itinerary in JSON format, along with user details and a disruption information that affects the travel plan. The disruption has
+a severity level (step, day, or plan) indicating how much of the itinerary is impacted. The mitigation depends on the “Disruption Tolerance” level-
+Flexiventurer or Planbound. If the traveler is identified as “Planbound”, the scope of revision must strictly correspond to the disruption_severity.
+Specifically, for step-level disruptions, only the affected event should be modified; for day-level disruptions, modifications must be limited to
+the POIs scheduled for that particular day; and for plan-level disruptions, broader itinerary changes are permitted. In contrast, for “Flexiventurer”
+travelers, there is no constraint linking the revision scope to the disruption severity. Your task is to update the travel itinerary to accommodate
+the disruption with necessary changes, using the reference information provided to guide your modifications. Return the complete revised travel
+plan in the exact same JSON format as the original. You must acknowledge the disruption first and then proceed with appropriate revisions
+based on disruption severity and traveler’s disruption tolerance.
+****** Example ******
+Travel Itinerary and User Details:{“idx”: 25,“row_number”: 530,“JSON”: {“org”:“Green Bay”,“dest”:“Atlanta”,“days”: 3,“visit-
+ing_city_number”: 1,“date”: [“2024-11-20”,“2024-11-21”,“2024-11-22”],“people_number”: 2,“local_constraint”: {“house rule”: null,“cuisine”:
+[“Mexican”,“Italian”,“French”,“Mediterranean”],“room type”:“not shared room”,“transportation”: null,“event”: null,“attraction”: [“Shop-
+ping”,“Concerts & Shows”]},“budget”: 1650.0,“query”: null,“level”:“hard”},“persona”:“Traveler Type: Adventure Seeker; Purpose of Travel:
+Cultural Exploration; Spending Preference: Luxury Traveler; Location Preference: Cities”,“disruption tolerance”:“Planbound”,“plan”: [{“days”:
+1,“current_city”:“from Green Bay to Atlanta”,“transportation”:“Flight Number: F3526412, from Green Bay to Atlanta, Departure Time:
+05:32, Arrival Time: 08:50”,“breakfast”:“St. Cecilia, Atlanta”,“attraction”:“High Museum of Art, Atlanta;World of Coca-Cola,Atlanta;
+Fox Theatre, Atlanta”,“lunch”:“La Tavola Trattoria, Atlanta”,“dinner”:“Nikolai’s Roof, Atlanta”,“accommodation”:“Chic, Clean, City
+Loft Getaway, Atlanta”,“event”:“-”,“point_of_interest_list”:“Chic, Clean, City Loft Getaway, stay from 09:30 to 10:00, nearest transit:
+PONCE DE LEON AVE @ LULLWATER RD NE, 192.63m away;St. Cecilia, visit from 10:30 to 11:00, nearest transit: PEACHTREE
+RD NE @ OAK VALLEY RD NE, 63.53m away;High Museum of Art, visit from 12:00 to 14:00, nearest transit: PEACHTREE ST NE
+@ 16TH ST NE, 81.08m away;La Tavola Trattoria, visit from 15:00 to 15:30, nearest transit: VIRGINIA AVE NE @ TODD RD NE,
+27.36m away;World of Coca-Cola, visit from 16:00 to 17:30, nearest transit: IVAN ALLEN JR BLVD NW @ LOVEJOY ST, 249.77m
+away;Fox Theatre, visit from 18:00 to 20:45, nearest transit: PEACHTREE ST NE @ PONCE DE LEON AVE, 41.68m away;Nikolai’s
+Roof, visit from 21:30 to 22:30, nearest transit: RALPH MCGILL BLVD NE @ COURTLAND ST, 309.92m away;Chic, Clean, City
+Loft Getaway, stay from 23:00 to 07:00, nearest transit: PONCE DE LEON AVE @ LULLWATER RD NE, 192.63m away.”}, {“days”:
+2,“current_city”:“Atlanta”,“transportation”:“-”,“breakfast”:“Home Grown, Atlanta”,“attraction”:“Zoo Atlanta, Atlanta; National Center for
+Civil and Human Rights, Atlanta”,“lunch”:“No Mas! Cantina, Atlanta”,“dinner”:“Cafe Agora, Atlanta”,“accommodation”:“Chic, Clean, City
+Loft Getaway, Atlanta”,“event”:“-”,“point_of_interest_list”:“Chic, Clean, City Loft Getaway, stay from 07:00 to 07:30, nearest transit: PONCE
+DE LEON AVE @ LULLWATER RD NE, 192.63m away;Home Grown, visit from 08:00 to 09:00, nearest transit: MEMORIAL DR SE @
+GIBSON ST SE, 49.17m away;Zoo Atlanta, visit from 09:30 to 13:00, nearest transit: CHEROKEE AVE @ GRANT PARK PL, 195.14m
+away;No Mas! Cantina, visit from 13:30 to 15:00, nearest transit: PETERS ST SW @ HAYNES ST SW, 123.79m away;National Center
+for Civil and Human Rights, visit from 15:30 to 18:30, nearest transit: IVAN ALLEN JR BLVD NW @ LOVEJOY ST, 78.15m away;Cafe
+Agora, visit from 20:00 to 21:30, nearest transit:PEACHTREE ST @ PEACHTREE PL , 29.31m away;Chic, Clean, City Loft Getaway, stay
+from 22:00 to 07:00, nearest transit: PONCE DE LEON AVE @ LULLWATER RD NE, 192.63m away.”}, {“days”: 3,“current_city”:“from
+Atlanta to Green Bay”,“transportation”:“Flight Number: F0889249, from Atlanta to Green Bay, Departure Time: 17:56, Arrival Time:
+18:55”,“breakfast”:“South City Kitchen Midtown, Atlanta”,“attraction”:“Piedmont Park, Atlanta; Lenox Square, Atlanta”,“lunch”:“Aviva by
+Kameel, Atlanta”,“dinner”:“-”,“accommodation”:“-”,“event”:“-”,“point_of_interest_list”:“Chic, Clean, City Loft Getaway, stay from 07:00 to
+08:00, nearest transit: PONCE DE LEON AVE @ LULLWATER RD NE, 192.63m away;South City Kitchen Midtown, visit from 09:00 to
+10:00, nearest transit: PEACHTREE ST @ 14TH ST NE, 128.52m away;Piedmont Park, visit from 10:30 to 13:30, nearest transit: PIEDMONT
+AVE NE @ PRADO, 407.10m away;Aviva by Kameel, visit from 14:05 to 15:00, nearest transit: PEACHTREE ST @ ANDREW YOUNG
+INTL BLVD (PEACHTREE CTR STN), 52.29m away;Lenox Square, visit from 15:30 to 17:00, nearest transit: PEACHTREE RD NE @
+LENOX PKWY, 230.44m away.”}]}
+Disruption Query: I was thinking of doing some shopping at Lenox Square in Atlanta on Day 3, but I just heard there might be temporary
+closures due to a security drill or incident. Do you know if it’s still open? If not, could you point me to another good shopping spot nearby?
+Reference Information: {...}
+Complete Revised Travel Plan:
+acknowledgement: Attractions Disruption identified and understood. Proceeding with appropriate revisions based on disruption severity and
+traveler tolerance.
+Day 1:
+Current City: from Green Bay to Atlanta
+Transportation: Flight Number: F3526412, from Green Bay to Atlanta, Departure Time: 05:32, Arrival Time: 08:50
+Breakfast: St. Cecilia, Atlanta
+Attraction: High Museum of Art, Atlanta;World of Coca-Cola,Atlanta; Fox Theatre, AtlantaLunch: La Tavola Trattoria, Atlanta
+Dinner: Nikolai’s Roof, Atlanta
+Accommodation: Chic, Clean, City Loft Getaway, Atlanta
+Event: -
+Point of Interest List: Chic, Clean, City Loft Getaway, stay from 09:30 to 10:00, nearest transit: PONCE DE LEON AVE @ LULLWATER RD
+NE, 192.63m away;St. Cecilia, visit from 10:30 to 11:00, nearest transit: PEACHTREE RD NE @ OAK VALLEY RD NE, 63.53m away;High
+Museum of Art, visit from 12:00 to 14:00, nearest transit: PEACHTREE ST NE @ 16TH ST NE, 81.08m away;La Tavola Trattoria, visit from
+15:00 to 15:30, nearest transit: VIRGINIA AVE NE @ TODD RD NE, 27.36m away;World of Coca-Cola, visit from 16:00 to 17:30, nearest
+transit: IVAN ALLEN JR BLVD NW @ LOVEJOY ST, 249.77m away;Fox Theatre, visit from 18:00 to 20:45, nearest transit: PEACHTREE
+ST NE @ PONCE DE LEON AVE, 41.68m away;Nikolai’s Roof, visit from 21:30 to 22:30, nearest transit: RALPH MCGILL BLVD NE @
+COURTLAND ST, 309.92m away;Chic, Clean, City Loft Getaway, stay from 23:00 to 07:00, nearest transit: PONCE DE LEON AVE @
+LULLWATER RD NE, 192.63m away.
+Day 2:
+Current City: Atlanta
+Transportation: -
+Breakfast: Home Grown, Atlanta
+Attraction: Zoo Atlanta, Atlanta; National Center for Civil and Human Rights, Atlanta
+Lunch: No Mas! Cantina, Atlanta
+Dinner: Cafe Agora, Atlanta
+Accommodation: Chic, Clean, City Loft Getaway, Atlanta
+Event: -
+Point of Interest List: Chic, Clean, City Loft Getaway, stay from 07:00 to 07:30, nearest transit: PONCE DE LEON AVE @ LULLWATER RD
+NE, 192.63m away;Home Grown, visit from 08:00 to 09:00, nearest transit: MEMORIAL DR SE @ GIBSON ST SE, 49.17m away;Zoo
+Atlanta, visit from 09:30 to 13:00, nearest transit: CHEROKEE AVE @ GRANT PARK PL, 195.14m away;No Mas! Cantina, visit from
+13:30 to 15:00, nearest transit: PETERS ST SW @ HAYNES ST SW, 123.79m away;National Center for Civil and Human Rights, visit from
+15:30 to 18:30, nearest transit: IVAN ALLEN JR BLVD NW @ LOVEJOY ST, 78.15m away;Cafe Agora, visit from 20:00 to 21:30, nearest
+transit:PEACHTREE ST @ PEACHTREE PL , 29.31m away;Chic, Clean, City Loft Getaway, stay from 22:00 to 07:00, nearest transit:
+PONCE DE LEON AVE @ LULLWATER RD NE, 192.63m away.
+Day 3:
+Current City: from Atlanta to Green Bay
+Transportation: Flight Number: F0889249, from Atlanta to Green Bay, Departure Time: 17:56, Arrival Time: 18:55
+Breakfast: South City Kitchen Midtown, Atlanta
+Attraction: Piedmont Park, Atlanta; Ponce City Market, Atlanta
+Lunch: Aviva by Kameel, Atlanta
+Dinner: -
+Accommodation: -
+Event: -
+Point of Interest List: Chic, Clean, City Loft Getaway, stay from 07:00 to 08:00, nearest transit: PONCE DE LEON AVE @ LULLWATER RD
+NE, 192.63m away;South City Kitchen Midtown, visit from 09:00 to 10:00, nearest transit: PEACHTREE ST @ 14TH ST NE, 128.52m
+away;Piedmont Park, visit from 10:30 to 13:30, nearest transit: PIEDMONT AVE NE @ PRADO, 407.10m away;Aviva by Kameel, visit from
+14:05 to 15:00, nearest transit: PEACHTREE ST @ ANDREW YOUNG INTL BLVD (PEACHTREE CTR STN), 52.29m away;Ponce City
+Market, visit from 15:30 to 17:00, nearest transit: PONCE DE LEON AVE NE @ GLEN IRIS DR NE, 150.00m away.
+****** Example Ends ******
+Travel Itinerary and User Details:{text}
+Disruption Query:{query}
+Reference Information :{reference_information}
+Complete Revised Travel Plan”

@@ -1,0 +1,82 @@
+You are given a travel itinerary in JSON format annotation_plan, along with user details and disruption information disruption_info that
+affects the travel plan. The disruption has a severity level (step, day, or plan) indicating how much of the itinerary is impacted. The mitigation
+depends on the “Disruption Tolerance” level - Flexiventurer or Planbound. If the traveler is identified as “Planbound”, the scope of revision
+must strictly correspond to the disruption_severity. Specifically, for step-level disruptions, only the affected event should be modified; for
+day-level disruptions, modifications must be limited to the POIs scheduled for that particular day; and for plan-level disruptions, broader
+itinerary changes are permitted. In contrast, for “Flexiventurer” travelers, there is no constraint linking the revision scope to the disruption
+severity. Your task is to update the travel itinerary to accommodate the disruption with necessary changes, using the reference information
+reference_information provided to guide your modifications. Return the complete revised travel plan in the exact same JSON format as the
+original. You must acknowledge the disruption first and then proceed with appropriate revisions based on disruption severity and traveler’s
+disruption tolerance.
+****** Example ******
+Travel Itinerary and User Details:
+{“idx”: 4, “JSON”: {“org”: “Tampa”, “dest”: “Bloomington”, “days”: 3, “visiting_city_number”: 1, “date”: ["2024-11-05”, “2024-11-06”,
+“2024-11-07”], “people_number”: 1, “local_constraint”: {“house rule”: null, “cuisine”: null, “room type”: null, “transportation”: null, “event”:
+null, “attraction”: null}, “budget”: 1650.0, “query”: null, “level”: “easy”}, “persona”: “Traveler Type: Adventure Seeker; Purpose of Travel:
+Nature; Spending Preference: Luxury Traveler; Location Preference: Forests/Wildlife”,"disruption tolerance”: “Planbound”, “plan”: [{“days”:
+1, “current_city”: “From Tampa to Bloomington”, “transportation”: “Self-driving, from Tampa to Bloomington, Departure Time: 16:00, Arrival
+Time: 12:48”, “breakfast”: “-”, “attraction”: “Monroe Lake”, “lunch”: “Upland Brewing - Bloomington”, “dinner”: “Baxter’s American
+Grill”, “accommodation”: “Arcade House, Bloomington”, “event”: “-”, “point_of_interest_list”: “Arcade House, stay from 13:15 to 13:45,
+nearest transit: Prow Rd @ Meadows Hospital, 251003.54m away;Upland Brewing - Bloomington, lunch from 14:15 to 15:15, nearest transit:
+Rogers St & 11th St, 107.43m away;Monroe Lake, visit from 17:00 to 19:00, nearest transit: Rhorer Rd at the Clear Creek Crossing Shopping
+Center, 12621.65m away;Baxter’s American Grill, dinner from 20:00 to 21:30, nearest transit: Prow Rd @ Meadows Hospital, 247021.85m
+away;Arcade House, stay from 22:00 to 08:00, nearest transit: Prow Rd @ Meadows Hospital, 251003.54m away.”}, {“days”: 2, “current_city”:
+“Bloomington”, “transportation”: “-”, “breakfast”: “Osteria Rago”, “attraction”: “Miller Park Zoo; Constitution Trail; Tibetan Mongolian
+Buddhist Cultural Center”, “lunch”: “Runcible Spoon Cafe and Restaurant”, “dinner”: “Epiphany Farms Restaurant”, “accommodation”:
+“Arcade House, Bloomington”, “event”: “-”, “point_of_interest_list”: “Arcade House, stay from 08:00 to 08:30, nearest transit: Prow Rd @
+Meadows Hospital, 251003.54m away;Osteria Rago, visit from 09:00 to 10:00, nearest transit: Dunn St and Kirkwood Ave, 78.59m away;Miller
+Park Zoo, visit from 10:30 to 12:30, nearest transit: Belle & Park Square, 252594.59m away;Runcible Spoon Cafe and Restaurant, visit from
+13:00 to 14:30, nearest transit: Dunn St and Kirkwood Ave, 101.05m away;Constitution Trail, visit from 15:30 to 16:30, nearest transit: Prow
+Rd @ Meadows Hospital, 250910.58m away;Tibetan Mongolian Buddhist Cultural Center, visit from 17:30 to 19:30, nearest transit: Sare Rd @
+Porto Flats Inbound, 1613.24m away;Epiphany Farms Restaurant, visit from 20:00 to 21:30, nearest transit: Prow Rd @ Meadows Hospital,
+252068.66m away;Arcade House, stay from 22:00 to 07:00, nearest transit: Prow Rd @ Meadows Hospital, 251003.54m away.”}, {“days”: 3,
+“current_city”: “From Bloomington to Tampa”, “transportation”: “Taxi, from Bloomington to Tampa, Departure Time: 14:30, Arrival Time:
+11:18”, “breakfast”: “The Chocolate Moose”, “attraction”: “Oliver Winery”, “lunch”: “Farm Bloomington”, “dinner”: “-”, “accommodation”:
+“-”, “event”: “-”, “point_of_interest_list”: “Arcade House, stay from 07:00 to 07:30, nearest transit: Prow Rd @ Meadows Hospital, 251003.54m
+away;The Chocolate Moose, visit from 08:00 to 09:00, nearest transit: Walnut St & Smith Ave @ Project School, 24.48m away;Oliver Winery,
+visit from 09:20 to 11:30, nearest transit: Acuff & Rosewood, 8560.79m away;Farm Bloomington, visit from 12:00 to 13:30, nearest transit:
+Washington St & Kirkwood Ave, 65.76m away.”}]}
+Disruption Information:
+Day 1- Accommodation: Arcade House, Bloomington
+- Disruption Category: Accommodations
+- Reason: Issues such as poor hygiene, missing amenities, or remote location may not meet luxury standards.
+- Disruption Detection Timestamp: Upon arrival or 1 day before (confirmation with host/property).
+- Disruption Severity: Step-level
+Reference Information: { ... }
+Complete Revised Travel Plan:
+{“acknowledgement”: “Accommodation Disruption identified and understood. Proceeding with appropriate revisions based on disruption
+severity and traveler tolerance.”,“idx”: 4, “JSON”: {“org”: “Tampa”, “dest”: “Bloomington”, “days”: 3, “visiting_city_number”: 1, “date”:
+[“2024-11-05”, “2024-11-06”, “2024-11-07”], “people_number”: 1, “local_constraint”: {“house rule”: null, “cuisine”: null, “room type”:
+null, “transportation”: null, “event”: null, “attraction”: null}, “budget”: 1650.0, “query”: null, “level”: “easy"}, “persona”: “Traveler Type:
+Adventure Seeker; Purpose of Travel: Nature; Spending Preference: Luxury Traveler; Location Preference: Forests/Wildlife”, “disruption
+tolerance”: “Planbound”, “plan”: [{“days”: 1, “current_city”: “From Tampa to Bloomington”, “transportation”: “Self-driving, from Tampa
+to Bloomington, Departure Time: 16:00, Arrival Time: 12:48”, “breakfast”: “-”, “attraction”: “Monroe Lake”, “lunch”: “Upland Brewing
+- Bloomington”, “dinner”: “Baxter’s American Grill”, “accommodation”: “The Chateau Hotel and Conference Center, Bloomington”,
+“event”: “-”, “point_of_interest_list”: “The Chateau Hotel and Conference Center, check-in from 13:15 to 13:45, address: 1621 Jumer Drive,
+Bloomington IL 61704, nearest transit: Prow Rd @ Meadows Hospital, 251003.54m away; Upland Brewing - Bloomington, lunch from 14:15
+to 15:15, nearest transit: Rogers St & 11th St, 107.43m away; Monroe Lake, visit from 17:00 to 19:00, nearest transit: Rhorer Rd at the Clear Creek Crossing Shopping Center, 12621.65m away; Baxter’s American Grill, dinner from 20:00 to 21:30, nearest transit: Prow Rd
+@ Meadows Hospital, 247021.85m away; The Chateau Hotel and Conference Center, overnight stay from 22:00 to 08:00, nearest transit:
+Prow Rd @ Meadows Hospital, 251003.54m away."},{“days”: 2, “current_city”: “Bloomington”,“transportation”: “-”,“breakfast”: “Osteria
+Rago”, “attraction”: “Miller Park Zoo; Constitution Trail; Tibetan Mongolian Buddhist Cultural Center”, “lunch”: “Runcible Spoon Cafe and
+Restaurant”, “dinner”: “Epiphany Farms Restaurant”, “accommodation”: “The Chateau Hotel and Conference Center, Bloomington”, “event”:
+“-”, “point_of_interest_list”: “The Chateau Hotel and Conference Center, stay from 08:00 to 08:30, address: 1621 Jumer Drive, Bloomington IL
+61704, nearest transit: Prow Rd @ Meadows Hospital, 251003.54m away; Osteria Rago, visit from 09:00 to 10:00, nearest transit: Dunn St and
+Kirkwood Ave, 78.59m away; Miller Park Zoo, visit from 10:30 to 12:30, nearest transit: Belle & Park Square, 252594.59m away; Runcible
+Spoon Cafe and Restaurant, visit from 13:00 to 14:30, nearest transit: Dunn St and Kirkwood Ave, 101.05m away; Constitution Trail, visit
+from 15:30 to 16:30, nearest transit: Prow Rd @ Meadows Hospital, 250910.58m away; Tibetan Mongolian Buddhist Cultural Center, visit
+from 17:30 to 19:30, nearest transit: Sare Rd @ Porto Flats Inbound, 1613.24m away; Epiphany Farms Restaurant, visit from 20:00 to 21:30,
+nearest transit: Prow Rd @ Meadows Hospital, 252068.66m away; The Chateau Hotel and Conference Center, overnight stay from 22:00
+to 07:00, nearest transit: Prow Rd @ Meadows Hospital, 251003.54m away."}, {“days”: 3, “current_city”: “From Bloomington to Tampa”,
+“transportation”: “Taxi, from Bloomington to Tampa, Departure Time: 14:30, Arrival Time: 11:18”, “breakfast”: “The Chocolate Moose”,
+“attraction”: “Oliver Winery”, “lunch”: “Farm Bloomington”, “dinner”: “-”, “accommodation”: “-”, “event”: “-”, “point_of_interest_list”: “The
+Chateau Hotel and Conference Center, check-out from 07:00 to 07:30, address: 1621 Jumer Drive, Bloomington IL 61704, nearest transit:
+Prow Rd @ Meadows Hospital, 251003.54m away; The Chocolate Moose, visit from 08:00 to 09:00, nearest transit: Walnut St & Smith
+Ave @ Project School, 24.48m away; Oliver Winery, visit from 09:20 to 11:30, nearest transit: Acuff & Rosewood, 8560.79m away; Farm
+Bloomington, visit from 12:00 to 13:30, nearest transit: Washington St & Kirkwood Ave, 65.76m away."}]}
+****** Example Ends ******
+Travel Itinerary and User Details:{annotation_plan}
+Disruption Information:{disruption_info}
+Reference Information :{reference_information}
+Output the complete travel plan with acknowledgement and the modifications in the exact same JSON template as the original.
+Your response must start with “Complete Revised Travel Plan”
+Output: [{“Complete Revised Travel Plan”: complete_revised_travel_plan}]
